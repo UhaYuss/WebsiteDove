@@ -1,24 +1,102 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    min-width:100%;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.navbar {
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 20px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+    .navbar a {
+        text-decoration: none;
+        color: #251b1b;
+        padding: 20px 100px;
+    }
+
+.left-menu, .right-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.logo {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+    .logo img {
+        max-width: 100px;
+    }
+
+.right-menu li {
+    display: flex;
+    align-items: center;
+}
+
+input[type="text"] {
+    border: none;
+    padding: 5px;
+    width: 150px;
+}
+
+.navbar a:hover {
+    color: #483ada;
+}
+
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.left-section {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.logo-large img {
+    width: 150px;
+}
+
+.right-section {
+    flex-grow: 1;
+    text-align: right;
+}
+
+.links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+    .links a:hover {
+        color: #FFD700; 
+    }
+
+.universe-icons img {
+    width: 30px;
 }
