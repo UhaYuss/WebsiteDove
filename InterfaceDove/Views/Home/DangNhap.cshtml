@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="~/img/Logo/logoDove.jpg" />
+        </div>
+        <h2>Đăng Nhập</h2>
+        <form method="post" action="@Url.Action("XacThuc", "Home")">
+            <div>
+                <label for="username">Tài Khoản:</label>
+                <input type="text" name="username" id="username" />
+            </div>
+            <div>
+                <label for="password">Mật Khẩu:</label>
+                <input type="password" name="password" id="password" />
+            </div>
+            @if (ViewBag.LoginFailMessage != null)
+            {
+                <p class="text-danger">@ViewBag.LoginFailMessage</p>
+            }
+            <input type="submit" value="Đăng Nhập" class="btn" />
+        </form>
+        <div class="links">
+            <a href="@Url.Action("DangKy","Home")">Đăng Ký</a>
+            <a href="quenmatkhau.html">Quên mật khẩu</a>
+        </div>
+    </div>
+</body>
+
+

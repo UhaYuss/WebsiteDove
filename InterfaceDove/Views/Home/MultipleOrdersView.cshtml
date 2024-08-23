@@ -1,0 +1,96 @@
+﻿@model IEnumerable<InterfaceDove.Models.SanPhamWithChiTietSanPham>
+@{
+    ViewBag.Title = "OrdersForBuyer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .container {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h2 {
+        color: #1b65c0;
+    }
+
+    h3 {
+        color: #333;
+        margin-top: 10px;
+    }
+
+    h4 {
+        color: #666;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    img {
+        max-width: 75px;
+        max-height: 75px;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="container">
+    <h2>Đơn hàng của bạn</h2>
+    @foreach (var order in Model)
+    {
+        <div>
+            <h3>Thông tin đơn hàng</h3>
+            <p>Mã đơn: @order.MaDonHang</p>
+            <p>SDT : @order.SoDienThoai</p>
+            <p>Người Nhận: @order.HoTen</p>
+            <p>Tổng đơn hàng:@order.ThanhTien VND</p>
+            <p>Đia chỉ giao hàng: @order.DiaChiNhanHang @order.QuanHuyen @order.TinhThanh</p>
+            <p>Ngày tạo: @order.ThoiGianDatHang.ToString("dd/MM/yyyy HH:mm:ss")</p>
+
+            <h4>Chi tiết đơn hàng</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Khác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var chiTiet in order.DanhSachChiTietDonHang)
+                    {
+                    <tr>
+                        <td>@chiTiet.MaDonHang</td>
+                        <td>@chiTiet.MaSanPham</td>
+                        <td>@order.DanhSachSanPham[order.DanhSachChiTietDonHang.IndexOf(chiTiet)].TenSanPham</td>
+                        <td><img src="~/img/Product/@order.DanhSachSanPham[order.DanhSachChiTietDonHang.IndexOf(chiTiet)].HinhAnhTruoc" alt="Product Image" style="max-width: 75px;" /></td>
+                        <td>@chiTiet.SoLuong</td>
+                        <td>@chiTiet.DonGia</td>
+                        <td>
+                            <a href="@Url.Action("ShowSanPham", "Product", new { id = chiTiet.MaSanPham })">Mua lại</a> <br />
+                            <a href="@Url.Action("AddDanhGia", "Product", new { id = chiTiet.MaSanPham, maNM = Session["IdKH"] })">Đánh giá</a>
+                        </td>
+                        
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

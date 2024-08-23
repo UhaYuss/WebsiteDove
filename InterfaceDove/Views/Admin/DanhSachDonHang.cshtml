@@ -1,0 +1,70 @@
+﻿@model IEnumerable<InterfaceDove.Models.DonHang>
+
+@{
+    ViewBag.Title = "DanhSachDonHang";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>DanhSachDonHang</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaDonHang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaNguoiMua)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoDienThoai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiaChiNhanHang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GhiChu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThanhTien)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThoiGianDatHang)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.MaDonHang)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.MaNguoiMua)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SoDienThoai)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TinhThanh)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.QuanHuyen)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DiaChiNhanHang)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.GhiChu)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ThanhTien)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ThoiGianDatHang)
+    </td>
+    <td>
+        @Html.ActionLink("Xem chi tiết", "ChiTietDonHangView", new { id = item.MaDonHang });
+    </td>
+</tr>
+}
+
+</table>

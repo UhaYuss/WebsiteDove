@@ -1,0 +1,101 @@
+﻿@model IEnumerable<InterfaceDove.Models.SanPham>
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DanhSachSanPham</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Thêm sản phẩm mới", "ThemSanPham")
+    </p>
+    <form action="@Url.Action("DanhSachSanPhamDaLoc", "Admin")" method="post">
+        <label for="searchTerm">Tìm kiếm:</label>
+        <input type="text" id="searchTerm" name="searchTerm" class="search-bar" placeholder="Tìm theo mã hoặc theo từ khóa">
+        <button type="submit">Tìm kiếm</button>
+    </form>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaSanPham)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenSanPham)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaDanhMuc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoTa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HinhAnhTruoc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HinhAnhSau)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LanCuoiCapNhat)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaSanPham)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenSanPham)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaDanhMuc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MoTa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuong)
+                </td>
+                <td>
+                    <img src="~/img/Product/@item.HinhAnhTruoc" alt="Hình ảnh trước" style="max-width: 100px; max-height: 100px;" />
+                </td>
+
+                <td>
+                    <img src="~/img/Product/@item.HinhAnhSau" alt="Hình ảnh sau" style="max-width: 100px; max-height: 100px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LanCuoiCapNhat)
+                </td>
+                <td>
+                    @Html.ActionLink("Chỉnh sửa", "EditSanPham", new { id = item.MaSanPham }) |
+                    @Html.ActionLink("Thống kê sản phẩm", "ThongKeSanPham", new { id = item.MaSanPham }) |
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

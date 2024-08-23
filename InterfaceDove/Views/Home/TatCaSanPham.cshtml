@@ -1,0 +1,71 @@
+﻿@model IEnumerable<InterfaceDove.Models.SanPham>
+
+@{
+    ViewBag.Title = "Tất cả sản phẩm";
+    Layout = "~/Views/Shared/_LayoutBanner.cshtml";
+}
+
+<style>
+    .product-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .product-card {
+        width: calc(25% - 20px);
+        margin: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+        .product-card img {
+            width: 100%;
+        }
+
+    .add-to-cart-button {
+        background-color: white;
+        color: blue;
+        border: 1px solid #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .add-to-cart-button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+</style>
+<h2 style="text-align:center">Tất cả sản phẩm</h2>
+
+<div class="product-grid">
+    @foreach (var item in Model)
+    {
+        <a  href="@Url.Action("ShowSanPham", "Product", new {id = item.MaSanPham})">
+            <div class="product-card">
+                <img src="~/img/Product/@item.HinhAnhTruoc" />
+                <a href="@Url.Action("DanhMucSanPham","Product",new {id= item.MaDanhMuc})">@item.TenDanhMuc</a>
+                <p>@item.TenSanPham</p>
+                <p>Giá: @item.Gia VND</p>
+                @if (Session["KHRole"] == null)
+                {
+                    <button class="add-to-cart-button" onclick="alert('Vui lòng đăng nhập')">Thêm vào giỏ hàng</button>
+                }
+                else
+                {
+                    using (Html.BeginForm("AddSPtoCart", "Home", FormMethod.Post))
+                    {
+                        @Html.Hidden("mSP", item.MaSanPham)
+                        <input class="add-to-cart-button" type="submit" value="Thêm vào giỏ hàng" />
+                    }
+                }
+            </div>
+        </a>
+            }
+    </div>
+
+
+
+

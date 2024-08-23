@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <title>Đây là Giao diện admin</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto Slab', serif;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            width: 17%;
+            /* background-color: #060621;
+            color: #b79a35;*/
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+            .sidebar img {
+                max-width: 120px;
+                margin-bottom: 20px;
+            }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            /*  background-color: #060621;
+            color: #b79a35;*/
+            font-size: 20px;
+            height: 100px;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 85%;
+        }
+
+        .search-bar,
+        .menu-bar {
+            flex: 1;
+            position: relative;
+            margin-right: 60px;
+        }
+
+            .search-bar input {
+                width: 100%;
+                padding: 5px;
+                box-sizing: border-box;
+            }
+
+        .menu-bar {
+            text-align: right;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #060621;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            right: 0;
+        }
+
+        .menu-bar:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 10px;
+            color: #b79a35;
+            text-decoration: none;
+            display: block;
+        }
+
+        .content-body {
+            flex: 1;
+            display: normal;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <img src="~/img/Logo/logoDove.jpg" alt="Dove Logo" />
+            <h2>Chào Admin </h2>
+            <a href="@Url.Action("Index")" class="dropdown-item">Trang chủ</a>
+            <a href="@Url.Action("QuanLyNguoiMua")" class="dropdown-item">Quản lý khách hàng</a>
+            <a href="@Url.Action("DanhSachSanPham")" class="dropdown-item">Quản lý sản phẩm</a>
+            <a href="@Url.Action("DanhSachDonHang")" class="dropdown-item">Quản lý đơn hàng</a>
+            <a href="@Url.Action("DanhSachDanhGia")" class="dropdown-item">Quản lý đánh giá</a>
+        </div>
+
+        <div class="content">
+            <div class="navbar">
+                <div class="menu-bar">
+                    <span>Admin</span>
+                    <div class="dropdown-content">
+                        <a href="@Url.Action("DangXuat")" class="dropdown-item">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+            <div class="content-body">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</body>
+</html>

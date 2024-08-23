@@ -1,0 +1,196 @@
+﻿@model IEnumerable<InterfaceDove.Models.GioHang>
+
+@{
+    ViewBag.Title = "Giỏ Hàng";
+    Layout = "~/Views/Shared/_LayoutShoppingCart.cshtml";
+}
+<style>
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100px;
+        margin: 0 auto;
+    }
+
+    .quantity-button {
+        width: 40px;
+        height: 30px;
+        background-color: #aaa;
+        color: #fff;
+        font-size: 20px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .quantity-input {
+        width: 40px;
+        padding:0px -2px 0px -2px;
+        height:30px;
+        text-align: center;
+        padding: 0;
+    }
+    input{
+        border:none;
+        outline:none;
+    }
+    .quantity-button.plus {
+        background-color: #1b65c0;
+    }
+
+    .quantity-button.minus {
+        background-color: #d6d6da;
+        color: black;
+    }
+
+    a.btn-danger {
+        background-color: #f44336;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 5px;
+        cursor: pointer;
+    }
+    table.table {
+    }
+
+    .btn {
+    }
+    .quantity-input[readonly] {
+        width: 35px;
+        text-align: center;
+        padding: 0;
+        pointer-events: none;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: #000;
+    }
+
+
+
+</style>
+<div class="container">
+    <h2>Giỏ hàng của bạn </h2>
+    @if (Model.Any())
+    {
+        @Html.ActionLink("Xoá toàn bộ sản phẩm", "DeleteAllProduct", "Home", new { style = "float:right; display:inline-block;color:#a92835" })
+        int i = 1;
+        <table class="table">
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @(i++)
+                        </td>
+                        <td>
+                            <img style="max-width:75px" src="~/img/Product/@item.HinhAnhTruoc" alt="@item.TenSanPham" class="img-thumbnail" />
+                            <div>
+                                @item.TenSanPham
+                            </div>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("DanhMucSanPham","Product",new {id= item.MaDM})">@item.TenDanhMuc</a>
+                        </td>
+                        <td>
+                            @item.Gia.ToString("C")
+                        </td>
+                        <td>
+                            <div class="quantity-control">
+                                <span class="quantity-button minus">-</span>
+                                <input type="number" name="quantity" id="quantity" class="quantity-input" min="0" value="@item.SL" data-product-id="@item.MaSP" />
+                                <span class="quantity-button plus">+</span>
+                            </div>
+                        </td>
+                        <td>
+                            @item.TT.ToString("C")
+                        </td>
+                        <td>
+                            @Html.ActionLink("Xóa", "DeleteProduct", "Home", new { id = item.MaSP }, new { onclick = "return confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?');" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <strong>Tổng Cộng: @Model.Sum(item => item.TT).ToString("C")</strong>
+        </div>
+
+        <div class="text-center">
+            <a href="@Url.Action("TatCaSanPham", "Home")" class="btn btn-primary">Tiếp Tục Mua Hàng</a>
+            <a href="@Url.Action("ThanhToan", "Home",new { id = Session["IdKH"]})" class="btn btn-success">Đặt Hàng</a>
+        </div>
+    }
+    else
+    {
+        <p>Giỏ hàng của bạn đang trống. Hãy thêm sản phẩm vào giỏ hàng để tiếp</p>
+    }
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".quantity-button.plus").on("click", function () {
+            var inputField = $(this).siblings(".quantity-input");
+            incrementQuantity(inputField);
+        });
+
+        $(".quantity-button.minus").on("click", function () {
+            var inputField = $(this).siblings(".quantity-input");
+            decrementQuantity(inputField);
+        });
+    });
+
+    function incrementQuantity(inputField) {
+        var currentQuantity = parseInt(inputField.val());
+        inputField.val(currentQuantity + 1);
+        updateQuantity(inputField);
+    }
+
+    function decrementQuantity(inputField) {
+        var currentQuantity = parseInt(inputField.val());
+        if (currentQuantity > 0) {
+            inputField.val(currentQuantity - 1);
+            updateQuantity(inputField);
+        }
+    }
+
+    function updateQuantity(inputField) {
+        var productId = inputField.data("product-id");
+        var newQuantity = inputField.val();
+        if (newQuantity == 0) {
+            var confirmDelete = confirm("Số lượng sản phẩm đã giảm về 0. Bạn có muốn xóa sản phẩm này khỏi giỏ hàng?");
+            if (confirmDelete) {
+                deleteProduct(productId);
+            } else {
+                inputField.val(1);
+            }
+        } else {
+            $.ajax({
+                url: "/Home/UpdateQuantity",
+                method: "POST",
+                data: { id: productId, quantity: newQuantity },
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+    }
+
+    function deleteProduct(productId) {
+        $.ajax({
+            url: "/Home/DeleteProductSL",
+            method: "POST",
+            data: { id: productId },
+            success: function (data) {
+                location.reload();
+            }
+        });
+    }
+</script>
+

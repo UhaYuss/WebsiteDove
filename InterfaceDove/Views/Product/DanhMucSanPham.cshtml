@@ -1,0 +1,124 @@
+﻿@model InterfaceDove.Models.DanhMucViewModel
+
+@{
+    ViewBag.Title = Model.DanhMuc.TenDanhMuc;
+    Layout = "~/Views/Shared/_LayoutBanner.cshtml";
+}
+
+<style>
+    .product-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .product-card {
+        width: calc(25% - 20px);
+        margin: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+        .product-card img {
+            width: 100%;
+        }
+
+    .add-to-cart-button {
+        background-color: white;
+        color: blue;
+        border: 1px solid #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .add-to-cart-button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+
+    h2, p {
+        text-align: center;
+    }
+
+    .read-more-container {
+        text-align: center;
+    }
+
+
+    .read-more-link {
+        color: blue;
+        cursor: pointer;
+    }
+
+
+    #product-description {
+        white-space: pre-line;
+        text-align: justify;
+        max-height: 4.5em;
+        overflow: hidden;
+    }
+
+    #dots {
+        display: inline;
+    }
+
+    #more {
+        display: none;
+    }
+</style>
+
+<h2>@Model.DanhMuc.TenDanhMuc</h2>
+<p id="product-description">@Model.DanhMuc.MoTa</p>
+<div class="read-more-container">
+    <span id="dots">...</span>
+    <span id="more">@Model.DanhMuc.MoTa</span>
+    <br />
+    <span class="read-more-link" onclick="toggleDescription()" id="read-more-link">Xem thêm</span>
+</div>
+
+<div class="product-grid">
+    @foreach (var item in Model.SanPhams)
+    {
+
+        <div class="product-card">
+            <a href="@Url.Action("ShowSanPham", "Product", new {id = item.MaSanPham})">
+                <img src="~/img/Product/@item.HinhAnhTruoc" />
+                <p>@item.TenSanPham</p>
+                <p>Giá: @item.Gia VND</p>
+                @if (Session["KHRole"] == null)
+                {
+                    <button class="add-to-cart-button" onclick="alert('Vui lòng đăng nhập')">Thêm vào giỏ hàng</button>
+                }
+                else
+                {
+                    using (Html.BeginForm("AddSPtoCart", "Home", FormMethod.Post))
+                    {
+                        @Html.Hidden("mSP", item.MaSanPham)
+                        <input class="add-to-cart-button" type="submit" value="Thêm vào giỏ hàng" />
+                    }
+                }
+            </a>
+        </div>
+    }
+</div>
+
+<script>
+    function toggleDescription() {
+        var dots = document.getElementById("dots");
+        var moreText = document.getElementById("more");
+        var btnText = document.getElementById("read-more-link");
+
+        if (dots.style.display === "none") {
+            dots.style.display = "inline";
+            btnText.innerHTML = "Xem thêm";
+            moreText.style.display = "none";
+        } else {
+            dots.style.display = "none";
+            btnText.innerHTML = "Rút gọn";
+            moreText.style.display = "inline";
+        }
+    }
+</script>

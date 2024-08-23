@@ -1,0 +1,461 @@
+﻿@model InterfaceDove.Models.SanPhamWithDanhGia
+
+@{
+    ViewBag.Title = "Chi Tiết Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #f5f5f5;
+    }
+
+    .container {
+        margin-top: 20px;
+        background-color: #f5f5f5;
+        max-width: 1280px;
+        height: max-content;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
+
+
+    .product-container {
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: max-content;
+        margin-bottom: 30px;
+    }
+
+    .product-images {
+        text-align: left;
+    }
+
+    .main-image {
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    .thumbnail-images {
+        display: flex;
+        margin-top: 10px;
+        justify-content: center;
+    }
+
+    .thumbnail-image {
+        width: 50px;
+        height: 50px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin-top: 20px;
+    }
+
+        .product-info p {
+            font-size: 17px;
+        }
+
+    .quantity-control {
+        display: flex;
+        align-items: center;
+    }
+
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100px;
+    }
+
+    .quantity-button {
+        width: 40px;
+        height: 30px;
+        background-color: #aaa;
+        color: #fff;
+        font-size: 20px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .quantity-input {
+        width: 40px;
+        padding: 0px -2px 0px -2px;
+        height: 30px;
+        text-align: center;
+        padding: 0;
+    }
+
+    input {
+        border: none;
+        outline: none;
+    }
+
+    .quantity-button.plus {
+        background-color: #1b65c0;
+    }
+
+    .quantity-button.minus {
+        background-color: #d6d6da;
+        color: black;
+    }
+
+    .quantity-input[readonly] {
+        width: 35px;
+        text-align: center;
+        padding: 0;
+        pointer-events: none;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: #000;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .btn-success {
+        background-color: #185eb3;
+        color: white;
+        padding: 17px
+    }
+
+    .btn-back {
+        background-color: #c2c2c2;
+        color: black;
+        padding: 17px;
+    }
+
+    .btn-success,
+    .btn-back {
+        margin-right: 20px;
+    }
+
+    .Comment-container {
+        margin-top: 20px;
+        background-color: white;
+        max-width: 1280px;
+        padding: 20px 0 20px 0;
+        height: max-content;
+        margin-bottom: 20px;
+    }
+
+    .comment-box {
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin-bottom: 20px;
+        width: 1080px;
+    }
+
+        .comment-box p {
+            margin: 0;
+        }
+
+        .comment-box img {
+            max-width: 20px;
+        }
+
+    .title-cmt {
+        font-size: 25px;
+        grid-area: auto;
+        line-height: 21.6px;
+        margin: 0px 3.6px 0px 5px;
+        text-transform: capitalize
+    }
+
+    .info-container {
+        margin-top: 20px;
+        background-color: white;
+        max-width: 1280px;
+        padding: 20px;
+        height: max-content;
+        margin-bottom: 20px;
+    }
+
+    .description {
+        max-height: 80px;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+        font-size: 20px;
+    }
+
+    .toggle-description {
+        margin-top: 10px;
+    }
+
+    .read-more,
+    .read-less {
+        display: none;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .product-carousel-container {
+        position: relative;
+        overflow: hidden;
+        margin-top: 20px;
+        max-width: 1280px;
+        background-color: white;
+    }
+
+    .product-carousel {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        margin-bottom: 20px;
+    }
+
+    .product-card {
+        flex: 0 0 auto;
+        width: calc(20% - 20px);
+        margin-right: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+        .product-card img {
+            width: 100%;
+        }
+
+        .product-card a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+        }
+
+    .add-to-cart-button {
+        background-color: white;
+        color: blue;
+        border: 1px solid #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+        .add-to-cart-button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+    .prev-button,
+    .next-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .prev-button {
+        left: 10px;
+    }
+
+    .next-button {
+        right: 10px;
+    }
+</style>
+
+<div class="container">
+    <p>
+        <a href="@Url.Action("TatCaSanPham", "Home")">Tất cả sản phẩm</a> &gt;
+        <span><a href="@Url.Action("DanhMucSanPham", "Product", new { id = Model.MaDanhMuc })">@Model.TenDanhMuc</a></span> &gt;
+        <span><a href="@Url.Action("ShowSanPham", "Product", new { id = Model.MaSanPham })">@Model.TenSanPham</a></span>
+    </p>
+    <div class="product-container">
+        <div class="product-images">
+            <div class="main-image">
+                <img style="max-width: 300px;" src="~/img/Product/@Model.HinhAnhTruoc" id="mainImage" alt="Ảnh Sản Phẩm" />
+            </div>
+            <div class="thumbnail-images">
+                <img src="~/img/Product/@Model.HinhAnhSau" class="thumbnail-image" onclick="changeImage('@Model.HinhAnhSau')" />
+                <img src="~/img/Product/@Model.HinhAnhTruoc" class="thumbnail-image" onclick="changeImage('@Model.HinhAnhTruoc')" />
+            </div>
+        </div>
+
+        <div class="product-info">
+            <h2>@Model.TenSanPham</h2>
+            <p>Giá: @Model.Gia VND</p>
+            <p>Đánh Giá: @Model.Sao <img style="max-width:20px" src="~/img/Logo/star.png"></p>
+            <p>Số lượng hiện có: @Model.SoLuong</p>
+            <div class="quantity-control">
+                <span class="quantity-button minus">-</span>
+                <input type="number" name="quantity" id="quantity" class="quantity-input" min="0" value="1" data-product-id="@Model.MaSanPham" />
+                <span class="quantity-button plus">+</span>
+            </div>
+            <div class="button-container">
+                <a href="#" class="btn btn-success" onclick="addToCart(@Model.MaSanPham, $('#quantity').val())">Thêm vào giỏ hàng</a>
+                <a href="@Url.Action("TatCaSanPham", "Home")" class="btn btn-back">Trở về</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="info-container">
+        <p class="title-cmt" style="margin-bottom:20px">Mô tả sản phẩm</p>
+        <div class="description">
+            @Model.MoTa
+        </div>
+        <div class="toggle-description">
+            <a href="#" class="read-more" onclick="toggleDescription()">Xem thêm</a>
+            <a href="#" class="read-less" onclick="toggleDescription()">Rút gọn</a>
+        </div>
+    </div>
+    <div class="Comment-container">
+        <p class="title-cmt">Phản hồi (@Model.DanhGiaList.Count())</p>
+        <div class="Comment-container">
+            @foreach (var danhGia in Model.DanhGiaList)
+            {
+                <div class="comment-box">
+                    <p>Người mua: @danhGia.HoTen</p>
+                    <p>Đánh giá: @danhGia.Sao <img style="max-width:20px" src="~/img/Logo/star.png"></p>
+                    <p>Nội dung: @danhGia.NoiDung</p>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="product-carousel-container">
+        <p class="title-cmt" style="margin:20px">Các sản phẩm có liên quan</p>
+        <div class="product-carousel">
+            @foreach (var item in Model.SanPhams.Take(12))
+            {
+                <div class="product-card">
+                    <a href="@Url.Action("ShowSanPham", "Product", new { id = item.MaSanPham })">
+                        <img src="~/img/Product/@item.HinhAnhTruoc" />
+                        <p>@item.TenDanhMuc</p>
+                        <p>@item.TenSanPham</p>
+                        <p>Giá: @item.Gia VND</p>
+                    </a>
+                    <a class="add-to-cart-button" href="@Url.Action("ShowSanPham", "Product", new {id = item.MaSanPham})">Xem chi tiết</a>
+                </div>
+            }
+        </div>
+        <button class="prev-button" onclick="changeSlide(-1)">❮</button>
+        <button class="next-button" onclick="changeSlide(1)">❯</button>
+        <a style="justify-content: center; text-align: center; display: block; margin: 20px auto; font-size: 20px;" href="@Url.Action("TatCaSanPham", "Home")">Xem thêm các sản phẩm khác</a>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    function changeImage(imageUrl) {
+        document.getElementById('mainImage').src = '@Url.Content("~/img/Product/")' + imageUrl;
+    }
+
+    $(document).ready(function () {
+        $(".quantity-button.plus").on("click", function () {
+            var inputField = $(this).siblings(".quantity-input");
+            incrementQuantity(inputField);
+        });
+
+        $(".quantity-button.minus").on("click", function () {
+            var inputField = $(this).siblings(".quantity-input");
+            decrementQuantity(inputField);
+        });
+
+        // Initial interval setting for automatic slide change
+        var carouselInterval = setInterval(function () {
+            changeSlide(1);
+        }, 5000);
+    });
+
+    function incrementQuantity(inputField) {
+        var currentQuantity = parseInt(inputField.val());
+        inputField.val(currentQuantity + 1);
+        updateQuantity(inputField);
+    }
+
+    function decrementQuantity(inputField) {
+        var currentQuantity = parseInt(inputField.val());
+        if (currentQuantity > 0) {
+            inputField.val(currentQuantity - 1);
+            updateQuantity(inputField);
+        }
+    }
+
+    function addToCart(productId) {
+        var userRole = "@Session["KHRole"]";
+        var quantity = $("#quantity").val();
+
+        if (userRole === '') {
+            alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.");
+            return;
+        } else {
+            $.ajax({
+                url: "/Home/AddSPtoCart",
+                method: "POST",
+                data: { mSP: productId, quantity: quantity },
+                success: function (data) {
+                    alert("Mặt hàng đã được thêm thành công");
+
+                    if (quantity > 1) {
+                        updateQuantity(productId, quantity);
+                    }
+                },
+                error: function (error) {
+                    console.error("Error adding to cart:", error);
+                }
+            });
+        }
+    }
+
+    function updateQuantity(productId, quantity) {
+        $.ajax({
+            url: "/Home/UpdateQuantity",
+            method: "POST",
+            data: { id: productId, quantity: quantity },
+            success: function (data) {
+                console.log("Quantity updated successfully");
+            },
+            error: function (error) {
+                console.error("Error updating quantity:", error);
+            }
+        });
+    }
+
+    function toggleDescription() {
+        var description = document.querySelector('.description');
+        var readMore = document.querySelector('.read-more');
+        var readLess = document.querySelector('.read-less');
+
+        if (description.style.maxHeight) {
+            description.style.maxHeight = null;
+            readMore.style.display = 'inline';
+            readLess.style.display = 'none';
+        } else {
+            description.style.maxHeight = 'none';
+            readMore.style.display = 'none';
+            readLess.style.display = 'inline';
+        }
+    }
+
+    var currentIndex = 0;
+    var totalItems = $(".product-card").length;
+    var itemsPerPage = 3;
+    var itemWidth = $(".product-card").outerWidth() + 20;
+
+    function changeSlide(direction) {
+        currentIndex = (currentIndex + direction + totalItems) % totalItems;
+        var translateValue = -currentIndex * itemWidth;
+        $(".product-carousel").css("transform", "translateX(" + translateValue + "px)");
+    }
+</script>
+

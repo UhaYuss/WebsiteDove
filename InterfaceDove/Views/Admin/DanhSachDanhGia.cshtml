@@ -1,0 +1,51 @@
+﻿@model IEnumerable<InterfaceDove.Models.DanhGia>
+
+@{
+    ViewBag.Title = "DanhSachDanhGia";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaPhanHoi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaNguoiMua)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaSanPham)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoiDung)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sao)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaPhanHoi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaNguoiMua)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaSanPham)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoiDung)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sao)
+        </td>
+        <td>
+            @Html.ActionLink("Xóa do vi phạm", "DeleteDanhGia", new { id = item.MaPhanHoi })
+        </td>
+    </tr>
+}
+
+</table>

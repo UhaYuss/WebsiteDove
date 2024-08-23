@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "ChiTietNguoiMua";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi Tiết Người Mua</h2>
+
+<div>
+    <h3>Thông Tin Người Mua</h3>
+    <p><strong>Mã Người Mua:</strong> @Model.MaNguoiMua</p>
+    <p><strong>Số Điện Thoại:</strong> @Model.SoDienThoai</p>
+    <p><strong>Họ Tên:</strong> @Model.HoTen</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Địa Chỉ:</strong> @Model.DiaChi</p>
+    <p><strong>Ngày Tạo:</strong> @Model.NgayTao.ToString("dd/MM/yyyy HH:mm:ss")</p>
+</div>
+
+<div>
+    <h3>Danh Sách Đơn Hàng Đã Mua</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã Đơn Hàng</th>
+                <th>Số Điện Thoại Nhận Hàng</th>
+                <th>Địa Chỉ Nhận Hàng</th>
+                <th>Ghi Chú</th>
+                <th>Thời Gian Đặt Hàng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var donHang in Model.DonHangDaMuaList)
+            {
+                <tr>
+                    <td>@donHang.MaDonHang</td>
+                    <td>@donHang.SoDienThoai</td>
+                    <td>@donHang.SoDienThoai</td>
+                    <td>@donHang.TinhThanh</td>
+                    <td>@donHang.QuanHuyen</td>
+                    <td>@donHang.DiaChiNhanHang</td>
+                    <td>@donHang.GhiChu</td>
+                    <td>@donHang.ThoiGianDatHang.ToString("dd/MM/yy HH:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    @Html.ActionLink("Quay Lại", "QuanLyNguoiMua")
+</div>

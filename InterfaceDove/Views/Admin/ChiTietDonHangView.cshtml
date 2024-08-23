@@ -1,0 +1,54 @@
+﻿@model InterfaceDove.Models.ChiTietThongTinDonHang
+
+@{
+    ViewBag.Title = "ChiTietDonHangView";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Thông tin đơn hàng</h2>
+
+<table>
+    <tr>
+        <th>Mã đơn hàng</th>
+        <th>Mã người mua</th>
+        <th>Số điện thoại</th>
+        <th>Địa chỉ nhận hàng</th>
+        <th>Ghi chú</th>
+        <th>Thành tiền</th>
+        <th>Thời gian đặt hàng</th>
+    </tr>
+    <tr>
+        <td>@Model.MaDonHang</td>
+        <td>@Model.MaNguoiMua</td>
+        <td>@Model.SoDienThoai</td>
+        <td>@Model.TinhThanh</td>
+        <td>@Model.QuanHuyen</td>
+        <td>@Model.DiaChiNhanHang</td>
+        <td>@Model.GhiChu</td>
+        <td>@Model.ThanhTien</td>
+        <td>@Model.ThoiGianDatHang.ToString("dd/MM/yyyy HH:mm:ss")</td>
+    </tr>
+</table>
+
+<h2>Danh sách sản phẩm đã mua</h2>
+
+<table>
+    <tr>
+        <th>Mã chi tiết đơn hàng</th>
+        <th>Mã sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>Số lượng</th>
+        <th>Đơn giá</th>
+    </tr>
+    @foreach (var chiTiet in Model.DanhSachChiTietDonHang)
+    {
+        <tr>
+            <td>@chiTiet.MaChiTietDH</td>
+            <td>@chiTiet.MaDonHang</td>
+            <td>@chiTiet.MaSanPham</td>
+            <td>@Model.DanhSachTenSanPham[Model.DanhSachChiTietDonHang.IndexOf(chiTiet)]</td>
+            <td>@chiTiet.SoLuong</td>
+            <td>@chiTiet.DonGia</td>
+        </tr>
+    }
+</table>

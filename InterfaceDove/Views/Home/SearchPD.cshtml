@@ -1,0 +1,71 @@
+﻿@model IEnumerable<InterfaceDove.Models.SanPham>
+
+@{
+    ViewBag.Title = "SearchPD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:center">Kết quả Tìm kiếm</h2>
+
+<style>
+    .product-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .product-card {
+        width: calc(25% - 20px);
+        margin: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+        .product-card img {
+            width: 100%;
+        }
+
+    .add-to-cart-button {
+        background-color: white;
+        color: blue;
+        border: 1px solid #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .add-to-cart-button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+</style>
+
+@if (Model.Any())
+{
+    <div class="product-grid">
+        @foreach (var item in Model)
+        {
+            <div class="product-card">
+                <img src="~/img/Product/@item.HinhAnhTruoc" />
+                <p>@item.TenSanPham</p>
+                @if(item.Sao > 0)
+                    {
+                    <p>@item.Sao <img style="max-width: 15px;" src="~/img/logo/star.png" /></p>
+
+                    }
+                    else
+                    {
+                        <p>Sản phẩm chưa được đánh giá</p>
+                    }
+                <p>Giá: @item.Gia VND</p>
+                <button class="add-to-cart-button" data-product-id="@item.MaSanPham" data-product-name="@item.TenSanPham" data-product-price="@item.Gia">Thêm vào giỏ hàng</button>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Không tìm thấy sản phẩm nào</p>
+}
+

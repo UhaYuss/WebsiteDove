@@ -1,0 +1,112 @@
+﻿@model InterfaceDove.Models.NguoiMua
+
+@{
+    ViewBag.Title = "Chỉnh Sửa Thông Tin Người Mua";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+<div class="container">
+    <h2 style="text-align: center;">Chỉnh Sửa Thông Tin Khách Hàng</h2>
+    <hr />
+
+    @using (Html.BeginForm("LuuThongTinChinhSua", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.HiddenFor(model => model.MaNguoiMua)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SoDienThoai, "Số Điện Thoại", new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.HoTen, "Họ Tên", new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, "Email", new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Tỉnh/Thành phố", new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    <select id="province" name="TinhThanh" class="form-control" onchange="loadDistricts()">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Quận/Huyện", new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    <select id="district" name="QuanHuyen" class="form-control" onchange="loadWards()">
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DiaChi, "Địa Chỉ", new { @class = "control-label col-md-2" })
+                <div class="col-md-2">
+                    @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="text-center">
+        @Html.ActionLink("Quay Lại Thông Tin", "ThongTinNguoiMua", new { maNguoiMua = Model.MaNguoiMua }, new { @class = "btn btn-default" })
+    </div>
+</div>
+
+<script>
+    const host = "https://provinces.open-api.vn/api/";
+
+    var callAPI = (api, callback) => {
+        return axios.get(api)
+            .then((response) => {
+                callback(response.data);
+            });
+    }
+
+    var renderData = (array, select) => {
+        let row = ' <option disable value="">Chọn</option>';
+        array.forEach(element => {
+            row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
+        });
+        document.querySelector("#" + select).innerHTML = row;
+    }
+
+    callAPI(host + "?depth=1", (data) => {
+        renderData(data, "province");
+    });
+
+    var loadDistricts = () => {
+        let cityId = $("#province").find(':selected').data('id');
+        callAPI(host + "p/" + cityId + "?depth=2", (data) => {
+            renderData(data.districts, "district");
+        });
+    }
+</script>

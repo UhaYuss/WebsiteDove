@@ -1,0 +1,310 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>@ViewBag.Title - Dove</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'AR One Sans', sans-serif;
+            min-width: 100%;
+        }
+
+        .navbar {
+            background-color: white;
+            display: flex;
+            position: fixed;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 30px;
+            font-size: 20px;
+            z-index: 10000;
+            height: 11%;
+            width: 100%;
+        }
+
+            .navbar a {
+                text-decoration: none;
+                color: #251b1b;
+                padding: 20px 40px;
+            }
+
+        .left-menu, .right-menu {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            z-index: 1002;
+        }
+
+        .left-menu {
+            margin-right: 260px;
+        }
+
+        .right-menu {
+            margin-right: 50px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 1001;
+        }
+
+            .logo img {
+                max-width: 100px;
+                vertical-align: middle;
+            }
+
+        .right-menu li {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn_find {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="text"] {
+            margin: 0 auto;
+            border: none;
+            border-bottom: 2px solid blue;
+            padding: 15px;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        #search-button {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+            #search-button:hover {
+                background-color: darkblue;
+            }
+
+        .navbar a:hover {
+            color: #483ada;
+        }
+
+
+        footer {
+            background-color: #f0f0f0;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .left-section {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .logo-large img {
+            width: 150px;
+        }
+
+        .right-section {
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        .links a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+            .links a:hover {
+                color: #FFD700;
+            }
+
+        .universe-icons a {
+            margin-left: 20px;
+            text-decoration: none;
+        }
+
+        .universe-icons img {
+            width: 30px;
+            vertical-align: middle;
+        }
+
+        .universe-icons i {
+            font-size: 20px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        .text-center {
+            color: #333;
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10000;
+            top: 80%;
+        }
+
+            .submenu li {
+                padding: 2px 2px;
+                padding-left: -2px;
+            }
+
+
+        .right-menu li:hover .submenu {
+            display: inline-block;
+            max-width: fit-content;
+            margin: 0;
+            padding: 0;
+            z-index: 100003;
+        }
+
+        .submenu-item:hover > a::after {
+            transform: rotate(90deg);
+        }
+
+        .navbar::after {
+            background: url(https://www.dove.com/static/db756f2438ffb1fa856d14fe3eebb3aec4edcd142222143e3738ce5d14ee8524/resources/icons/global-nav-logo-bg.png) top no-repeat;
+            background-size: cover;
+            content: "";
+            height: 20px;
+            left: 0;
+            margin: 0 auto;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            width: 100px;
+            z-index: 1000;
+        }
+
+        .icon_nav a:hover {
+            color: #1862e2;
+        }
+        /*--------------------------------------------------header và footer -------------------------------------------*/
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="@Url.Action("Index","Home")"><img src="~/img/Logo/logoDove.jpg" alt="logo.jpg" /></a>
+        </div>
+        <ul class="left-menu">
+            <li><a href="@Url.Action("Contact","Home")">Khám phá bí quyết cùng Dove</a></li>
+            <li><a href="@Url.Action("About","Home")">Câu Chuyện của Dove</a></li>
+        </ul>
+        <ul class="right-menu">
+            <li class="submenu-item">
+                <a href="@Url.Action("TatCaSanPham","Home")">Sản Phẩm</a>
+                <ul class="submenu">
+                    <li><a href="@Url.Action("DanhMucSanPham","Product",new {id=1})">Tắm Rửa</a></li>
+                    <li><a href="@Url.Action("DanhMucSanPham","Product",new {id=2})">Sản Phẩm Khử Mùi</a></li>
+                    <li><a href="@Url.Action("DanhMucSanPham","Product",new {id=3})">Chăm Sóc Tóc</a></li>
+                </ul>
+            </li>
+            @if (Session["KHRole"] == null)
+            {
+                <li><a style="margin-left:20px" href="@Url.Action("DangNhap","Home")">Login</a>/<a href="@Url.Action("DangKy","Home")">Register</a></li>
+            }
+            else
+            {
+                <li class="icon_nav">
+                    <a href=""><i class="fas fa-user"></i></a>
+                    <ul class="submenu">
+                        @Html.ActionLink("Thông tin", "ThongTinNguoiMua", "Home", new { maNguoiMua = Session["IdKH"] }, null)
+                        <li><a href="@Url.Action("MultipleOrdersView","Home")">Lịch sử mua hàng</a></li>
+                        <li><a href="@Url.Action("DangXuat", "Home")">Đăng xuất</a></li>
+                    </ul>
+                </li>
+                <li class="icon_nav">
+                    <a href="@Url.Action("ShowGH","Home")"><i class="fa-solid fa-cart-shopping"></i></a>
+                </li>
+
+            }
+
+        </ul>
+    </nav>
+    <div style=" padding-top: 100px;"></div>
+    <div class="btn_find">
+        @using (Html.BeginForm("SearchPD", "Home", FormMethod.Post))
+        {
+            @Html.TextBox("name", "Tìm kiếm", new { onfocus = "if (this.value == 'Tìm kiếm') this.value = '';", onblur = "if (this.value == '') this.value = 'Tìm kiếm';" });
+
+        }
+        <button type="submit" id="search-button">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <footer>
+        <div class="footer-content">
+            <div class="left-section">
+                <div class="logo-large"><img src="~/img/Logo/logoDove.jpg" alt="Large Logo"></div>
+            </div>
+            <div class="right-section">
+                <div class="links">
+                    <a href="#">Liên hệ</a>
+                    <a href="#">Danh mục sản phẩm</a>
+                    <a href="#">Sản Phẩm</a>
+                    <a href="https://www.facebook.com/DoveVietnam/">Kết nối với chúng tôi qua:</a>
+                </div>
+            </div>
+            <div class="universe-icons">
+                <a href="https://www.facebook.com/DoveVietnam/"><img src="~/img/Logo/LogoUnilever.jpg" alt="Universe Icon 1"><p style="color: #333;display:inline">&copy; 2023 - Unilever</p></a> <br />
+                <br />
+                <a href="https://www.facebook.com/DoveVietnam/"><i class="fab fa-facebook" style="color: #3b5998; font-size: 20px;"></i></a>
+                <a href="https://www.instagram.com/dove/?hl=en"><i class="fab fa-instagram" style="color: #e4405f; font-size: 20px;"></i></a>
+                <a href="https://www.youtube.com/user/dovevietnam"><i class="fab fa-youtube" style="color: #c4302b; font-size: 20px;"></i></a>
+            </div>
+        </div>
+        <hr />
+        <p class="text-center" style="color: #333;">&copy; 2023 - Nhóm 13 Thiết kế WEB</p>
+    </footer>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
